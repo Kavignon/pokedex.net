@@ -1,27 +1,24 @@
 using Microsoft.EntityFrameworkCore;
-using pokedex.Models;
 
 namespace pokedex.DataAccess;
 
 internal sealed class PokedexDbContext : DbContext
 {
+    private readonly IConfiguration _configuration;
+
     public DbSet<Pokemon> Pokemons { get; set; }
     
-    private readonly IConfiguration configuration;
-
-    public PokedexDbContext(IConfiguration configuration)
+    public PokedexDbContext(DbContextOptions<PokedexDbContext> options)
+        : base(options)
     {
-        this.configuration = configuration;
-    }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        var connectionString = configuration.GetConnectionString("PokedexDbContext");
-        optionsBuilder.UseSqlite(connectionString);
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Pokemon>().ToTable("Pokemon");
+        // The key of the pokemon would be its number if it weren't for charizard mega evolutions which sits on the same number...
+        // So we'll use the name as the key instead.
+        // There are potentials concerns on this approach, such as performance and data duplication, but for the sake of this project, it's fine.
+        modelBuilder.Entity<Pokemon>().ToTable("Pokemon").HasKey(p => p.Name);
     }
 }
+
