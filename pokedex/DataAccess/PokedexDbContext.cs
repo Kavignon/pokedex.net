@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace pokedex.DataAccess;
 
-internal sealed class PokedexDbContext : DbContext
+public sealed class PokedexDbContext : DbContext
 {
     private readonly IConfiguration _configuration;
 
