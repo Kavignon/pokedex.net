@@ -38,8 +38,10 @@ namespace pokedex.Controllers
 
                 return BadRequest();
             }
-            
-            var pokemon = await _context.Pokemons.FindAsync(name);
+
+            var pokemon =
+                await _context.Pokemons.FirstOrDefaultAsync(
+                    p => p.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
 
             if (pokemon == null)
             {
@@ -86,7 +88,7 @@ namespace pokedex.Controllers
                 return BadRequest(ModelState);
             }
             
-            if (name != pokemon.Name)
+            if (!pokemon.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
             {
                 _logger.LogError($"The provided pokemon name, {name}, doesn't match the pokemon name in the body, {pokemon.Name}.");
                 return BadRequest();
@@ -119,7 +121,9 @@ namespace pokedex.Controllers
                 return BadRequest();
             }
             
-            var pokemon = await _context.Pokemons.FindAsync(name);
+            var pokemon =
+                await _context.Pokemons.FirstOrDefaultAsync(
+                    p => p.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
 
             if (pokemon == null)
             {
