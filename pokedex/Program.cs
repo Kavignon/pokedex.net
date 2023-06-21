@@ -1,11 +1,17 @@
+using Microsoft.EntityFrameworkCore;
+using pokedex.DataAccess;
+using pokedex.Infrastructure;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
+builder.Services.AddDbContext<PokedexDbContext>(options => options.UseInMemoryDatabase(       
+    "PokedexDb"    
+));
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+LoadDatabaseWithCsvData(builder);
 
 var app = builder.Build();
 
@@ -23,3 +29,9 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+static void LoadDatabaseWithCsvData(WebApplicationBuilder builder)
+{
+    var pokedexDbContext = builder.Services.BuildServiceProvider().GetService<PokedexDbContext>();
+    DatabaseSeeder.ImportDataFromSeedToDatabase(pokedexDbContext);
+}
