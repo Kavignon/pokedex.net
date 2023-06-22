@@ -7,16 +7,16 @@ Here's the data from where the Pokedex serves its data: https://gist.github.com/
 
 ## Features
 
-- Allows to get the data on a specific Pokemon when providing its name.
-- Allows to retrieve all legendary Pokemon data in the Pokedex.
-- Allows to retrieve the most search Pokemon in the past 24 hours.
-- Allows users to search for Pokemons with typos.
-- Allows for users to update the stats of a given Pokemon.
-- Allows for users to remove Pokemon from the Pokedex.
+- Allows getting the data on a specific Pokemon when providing its name.
+- Allows retrieving all legendary Pokemon data in the Pokedex.
+- Allows retrieving the most searched Pokemon in the past 24 hours.
+- Allows users to search for Pokemon with typos.
+- Allows users to update the stats of a given Pokemon.
+- Allows users to remove Pokemon from the Pokedex.
 
 ## High-level approach
 
-Please take a look at [design.md](docs/design.md) for more information.
+Please look at [design.md](docs/design.md) for more information.
 
 ## Installation
 
@@ -24,10 +24,7 @@ To run the ASP.NET Core Web API locally, follow these steps:
 
 ### Prerequisites
 - [.NET 7.X SDK](https://dotnet.microsoft.com/en-us/download)
-
-- [SQL Lite](https://www.sqlite.org/download.html)
-
-- [Docker](https://www.docker.com)
+- [Postman](https://www.postman.com/downloads/)
 
 ### Clone the repository
 
@@ -55,39 +52,6 @@ To run the ASP.NET Core Web API locally, follow these steps:
 
 `dotnet build`
 
-4. Apply database migrations:
-
-`dotnet ef database update`
-
-5. Run the API locally:
+4. Run the API locally:
 
 `dotnet run`
-
-### Executing the container
-
-1. Ensure Docker is running on your machine.
-
-2. Build the Docker image:
-
-`docker build -t pokedex-api`
-
-3. Run the Docker container:
-
-`docker run -p 8080:80 pokedex-api`
-
-4. The API will be available at http://localhost:8080.
-
-
-### Running Tests
-
-1. Change the current directory to the cloned repository:
-
-`cd pokedex.net`
-
-2. Run the tests:
-
-`dotnet test`
-
-## Roadmap
-
-Please take a look at [roadmap.md](docs/roadmap.md) for more information.
