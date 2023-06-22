@@ -1,6 +1,6 @@
 # Project Overview
 
-The first step in implementing the Pokedex is to focus on building the backend as an MVP (Minimum Viable Product). While doing so, it's important to acknowledge that certain corners might be cut initially, but we will rectify those issues as we approach the product release.
+The first step in implementing the Pokedex is to focus on building the backend as an MVP (Minimum Viable Product). While doing so, it's essential to let you know that certain corners might be cut initially, but we will fix those issues as we approach the product release.
 
 Throughout the development process, the following features will be treated as critical to demonstrate the functionality of the Pokedex MVP:
 
@@ -14,14 +14,20 @@ Deleting a Pokemon entry from the source.
 The Pokemon controller is the only controller in the application responsible for interacting with the database. The following APIs are defined for the MVP:
 
 POST /Pokemon: Allows users to add a new Pokemon entry to the data source by providing a Pokemon data model.
+
 GET /Pokemon: Retrieves all Pokemon (800+) from the data source.
-GET /pokemon/{name}: Retrieves a specific Pokemon from the data source based on the provided name, if a match is found.
+
+GET /pokemon/{name}: Retrieves a specific Pokemon from the data source based on the provided name if a match is found.
+
+PUT /pokemon/{name}: Update a Pokemon's stats directly on the source
+
+DELETE /pokemon/{name}: Delete a Pokemon from the data source based on the provided name if a match is found.
 
 # Things to Look Forward to in the Future
 
 ## Paginating the retrieval of all Pokemon models
 
-Currently, the implementation for retrieving all Pokemon models lacks pagination. To enhance performance and handle large datasets, we should introduce pagination functionality. This will allow users to retrieve Pokemon in smaller chunks. Here's an example of how we can implement pagination in the code:
+Currently, the implementation for retrieving all Pokemon models needs pagination. To enhance performance and handle large datasets, we should introduce pagination functionality. This will allow users to retrieve Pokemon in smaller chunks. Here's an example of how we can implement pagination in the code:
 
 ```csharp 
 [HttpGet]
@@ -55,12 +61,13 @@ public async Task<ActionResult<IEnumerable<Pokemon>>> GetPokemons(int pageSize, 
 ```
 
 ## Exposing Pokemon list through different filters
-To provide more flexibility and enhance the user experience, we can expose Pokemon data through various filters. This will enable users to retrieve specific subsets of Pokemon based on different criteria. Here are some potential filter options:
+We can expose Pokemon data through various filters to provide more flexibility and enhance the user experience. This will enable users to retrieve specific subsets of Pokemon based on different criteria. Here are some potential filter options:
 
-Get the top N% fastest, strongest, or most defensive Pokemon.
-Filter Pokemon by generations or regions (if such information is available).
-Retrieve a list of legendary Pokemon.
-By implementing these filters, we can offer users more targeted and specialized queries. For example, we can introduce an API to retrieve the top 5% strongest Pokemon based on their raw attack:
+- Get the top N% fastest, strongest, or most defensive Pokemon.
+- Filter Pokemon by generations or regions (if such information is available).
+- Retrieve a list of legendary Pokemon.
+
+We can offer users more targeted and specialized queries by implementing these filters. For example, we can introduce an API to retrieve the top 5% strongest Pokemon based on their raw attack:
 
 ```csharp 
 [HttpGet("topstrongest")]
@@ -91,15 +98,15 @@ public async Task<ActionResult<IEnumerable<Pokemon>>> GetTopStrongestPokemon()
 
 As the project evolves, we can continue expanding the range of filters and options available to users. By providing these additional features, we can enhance the functionality and usability of the Pokedex, making it a more comprehensive tool for Pokemon enthusiasts.
 
-As the project scales, it is important to consider having specific controllers responsible for particular tasks. This approach avoids having a single "god" class that handles too many responsibilities. Although, at the current scale of the project, having everything within one controller is acceptable. However, it's always good to keep scalability in mind.
+As the project scales, it is crucial to consider having specific controllers responsible for particular tasks. This approach avoids having a single "god" class that handles too many responsibilities. Although, at the current scale of the project, having everything within one controller is acceptable. However, it's always good to keep scalability in mind.
 
 # Data Layer
 
 To extract data from the provided CSV file and quickly manipulate it as required by the Pokedex, we'll utilize Sqlite and Entity Framework. For the MVP, the configuration will be treated as in-memory. This allows for fast data manipulation in RAM but does not persist if the web API session ends.
 
-While implementing the MVP, we have decided not to set up a Repository due to the nature of the operations involved. However, as we move from the MVP phase to supporting all features mentioned in the readme, we will revisit this decision.
+While implementing the MVP, we decided not to set up a Repository due to the nature of the operations involved. However, as we move from the MVP phase to supporting all features mentioned in the readme, we will revisit this decision.
 
-For future iterations, we suggest considering Redis or any distributed caching system. This can be useful for implementing features like a weekly leaderboard showcasing the most popular searched-for Pokemon.
+For future iterations, we would suggest that you consider Redis or any distributed caching system. This can be useful for implementing features like a weekly leaderboard showcasing the most popular searched-for Pokemon.
 
 # Testing the Application
 
